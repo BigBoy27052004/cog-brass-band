@@ -1,0 +1,144 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Login - C.O.G Brass Band</title>
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+    />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="css/style.css" />
+  </head>
+  <body>
+    <div id="header-placeholder"></div>
+
+    <section class="section">
+      <div class="container container-narrow">
+        <div class="card" style="max-width: 450px; margin: 0 auto">
+          <div style="text-align: center; margin-bottom: 32px">
+            <img
+              src="images/logo.jpg"
+              alt="C.O.G Brass Band Logo"
+              style="
+                width: 70px;
+                height: 70px;
+                border-radius: 12px;
+                object-fit: cover;
+                margin: 0 auto 16px;
+                display: block;
+                border: 2px solid var(--gold);
+              "
+            />
+            <h2>Member Login</h2>
+            <p style="color: var(--text-light)">Access your dashboard</p>
+          </div>
+
+          <form id="loginForm">
+            <div class="form-group">
+              <label>Email</label>
+              <input
+                type="email"
+                id="email"
+                class="form-control"
+                required
+                autocomplete="email"
+              />
+            </div>
+            <div class="form-group">
+              <label>Password</label>
+              <input
+                type="password"
+                id="password"
+                class="form-control"
+                required
+                autocomplete="current-password"
+              />
+            </div>
+            <div
+              id="loginError"
+              class="alert alert-danger"
+              style="display: none"
+            ></div>
+            <button
+              type="submit"
+              class="btn btn-primary btn-block btn-lg"
+              id="submitBtn"
+            >
+              <i class="fas fa-sign-in-alt"></i> Sign In
+            </button>
+          </form>
+
+          <p
+            style="
+              text-align: center;
+              margin-top: 24px;
+              color: var(--text-light);
+            "
+          >
+            Don't have an account? <a href="register.html">Join the band</a>
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <div id="footer-placeholder"></div>
+
+    <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-auth-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-database-compat.js"></script>
+    <script src="js/firebase-config.js"></script>
+    <script src="js/main.js"></script>
+
+    <script>
+      document
+        .getElementById("loginForm")
+        .addEventListener("submit", async (e) => {
+          e.preventDefault();
+
+          const submitBtn = document.getElementById("submitBtn");
+          const errorDiv = document.getElementById("loginError");
+          const email = document.getElementById("email").value;
+          const password = document.getElementById("password").value;
+
+          errorDiv.style.display = "none";
+          submitBtn.disabled = true;
+          submitBtn.innerHTML =
+            '<i class="fas fa-spinner fa-spin"></i> Signing in...';
+
+          try {
+            await auth.signInWithEmailAndPassword(email, password);
+
+            const uid = auth.currentUser.uid;
+            const roleSnap = await db.ref("roles/" + uid).once("value");
+
+            if (roleSnap.val() === "admin") {
+              window.location.href = "admin.html";
+            } else {
+              window.location.href = "dashboard.html";
+            }
+          } catch (error) {
+            let message = "Login failed. Please check your credentials.";
+            if (error.code === "auth/user-not-found")
+              message = "No account found with that email.";
+            if (error.code === "auth/wrong-password")
+              message = "Incorrect password.";
+            if (error.code === "auth/invalid-email")
+              message = "Invalid email address.";
+            if (error.code === "auth/invalid-credential")
+              message = "Invalid email or password.";
+
+            errorDiv.innerHTML =
+              '<i class="fas fa-exclamation-triangle"></i> ' + message;
+            errorDiv.style.display = "flex";
+            submitBtn.disabled = false;
+            submitBtn.innerHTML = '<i class="fas fa-sign-in-alt"></i> Sign In';
+          }
+        });
+    </script>
+  </body>
+</html>

@@ -1,0 +1,180 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>My Profile - C.O.G Brass Band</title>
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+    />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="css/style.css" />
+    <script src="https://upload-widget.cloudinary.com/global/all.js"></script>
+  </head>
+  <body data-page="profile">
+    <div id="header-placeholder"></div>
+
+    <section class="section">
+      <div class="container container-narrow">
+        <div class="section-header">
+          <h2>My Profile</h2>
+          <p>Update your personal information</p>
+        </div>
+
+        <div class="card">
+          <form id="profileForm">
+            <!-- Profile Photo -->
+            <div style="text-align: center; margin-bottom: 32px">
+              <div
+                id="profilePhotoContainer"
+                style="
+                  width: 120px;
+                  height: 120px;
+                  border-radius: 50%;
+                  overflow: hidden;
+                  background: var(--navy);
+                  display: flex;
+                  align-items: center;
+                  justify-content: center;
+                  color: white;
+                  font-size: 2.5rem;
+                  font-weight: 700;
+                  margin: 0 auto 16px;
+                  border: 3px solid var(--gold);
+                "
+              >
+                <i class="fas fa-user"></i>
+              </div>
+              <input type="hidden" id="profilePhotoURL" />
+              <button
+                type="button"
+                id="uploadProfilePhoto"
+                class="btn btn-secondary btn-sm"
+              >
+                <i class="fas fa-camera"></i> Change Photo
+              </button>
+            </div>
+
+            <div class="form-group">
+              <label>Full Name *</label>
+              <input
+                type="text"
+                id="profileName"
+                class="form-control"
+                required
+              />
+            </div>
+
+            <div class="form-group">
+              <label>Email (cannot be changed)</label>
+              <input
+                type="email"
+                id="profileEmail"
+                class="form-control"
+                readonly
+                style="background: var(--gray-100)"
+              />
+            </div>
+
+            <div class="form-group">
+              <label>Phone Number</label>
+              <input
+                type="tel"
+                id="profilePhone"
+                class="form-control"
+                placeholder="+27 XX XXX XXXX"
+              />
+            </div>
+
+            <div class="form-group">
+              <label>Date of Birth</label>
+              <input type="date" id="profileBirthDate" class="form-control" />
+            </div>
+
+            <div class="form-group">
+              <label>Primary Instrument</label>
+              <select id="profileInstrument" class="form-control">
+                <option>Trumpet</option>
+                <option>Trombone</option>
+                <option>French Horn</option>
+                <option>Tuba</option>
+                <option>Euphonium</option>
+                <option>Baritone</option>
+                <option>Cornet</option>
+                <option>Flugelhorn</option>
+                <option>Percussion</option>
+                <option>Conductor</option>
+                <option>Other</option>
+                <option>None</option>
+              </select>
+            </div>
+
+            <div id="profileStatus" style="display: none"></div>
+
+            <button
+              type="submit"
+              class="btn btn-primary btn-block btn-lg"
+              id="saveProfileBtn"
+            >
+              <i class="fas fa-save"></i> Save Changes
+            </button>
+          </form>
+
+          <hr
+            style="
+              margin: 32px 0;
+              border: none;
+              border-top: 1px solid var(--gray-200);
+            "
+          />
+
+          <h3 style="margin-bottom: 16px">Change Password</h3>
+          <form id="passwordForm">
+            <div class="form-group">
+              <label>Current Password</label>
+              <input
+                type="password"
+                id="currentPassword"
+                class="form-control"
+                required
+              />
+            </div>
+            <div class="form-group">
+              <label>New Password</label>
+              <input
+                type="password"
+                id="newPassword"
+                class="form-control"
+                required
+                minlength="6"
+              />
+              <p class="form-hint">Minimum 6 characters</p>
+            </div>
+            <div id="passwordStatus" style="display: none"></div>
+            <button
+              type="submit"
+              class="btn btn-secondary btn-block"
+              id="savePasswordBtn"
+            >
+              <i class="fas fa-key"></i> Change Password
+            </button>
+          </form>
+        </div>
+      </div>
+    </section>
+
+    <div id="footer-placeholder"></div>
+
+    <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-auth-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-database-compat.js"></script>
+    <script src="js/firebase-config.js"></script>
+    <script src="js/cloudinary-config.js"></script>
+    <script src="js/main.js"></script>
+    <script src="js/profile.js"></script>
+  </body>
+</html>

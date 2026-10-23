@@ -1,0 +1,388 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Contact Us - C.O.G Brass Band</title>
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+    />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="css/style.css" />
+    <script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@3/dist/email.min.js"></script>
+    <script>
+      emailjs.init("988gYmds0vunFnriJ");
+    </script>
+  </head>
+  <body data-page="contact">
+    <div id="header-placeholder"></div>
+
+    <section class="hero" style="padding: 60px 0; min-height: 300px">
+      <div class="hero-slideshow" id="heroSlideshow">
+        <div
+          class="hero-slide active"
+          style="background-image: url(&quot;images/hero-1.jpeg&quot;)"
+        ></div>
+        <div
+          class="hero-slide"
+          style="background-image: url(&quot;images/hero-2.jpeg&quot;)"
+        ></div>
+        <div
+          class="hero-slide"
+          style="background-image: url(&quot;images/hero-3.jpeg&quot;)"
+        ></div>
+        <div
+          class="hero-slide"
+          style="background-image: url(&quot;images/hero-4.jpg&quot;)"
+        ></div>
+      </div>
+      <div
+        id="heroDots"
+        style="
+          position: absolute;
+          bottom: 30px;
+          left: 50%;
+          transform: translateX(-50%);
+          display: flex;
+          gap: 10px;
+          z-index: 3;
+        "
+      ></div>
+      <div class="container" style="position: relative; z-index: 2">
+        <div class="hero-content">
+          <div class="hero-badge"><i class="fas fa-envelope"></i> Contact</div>
+          <h2>Get In Touch</h2>
+          <p>We'd love to hear from you</p>
+        </div>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="container">
+        <div
+          style="
+            display: grid;
+            grid-template-columns: 1fr 1.5fr;
+            gap: 40px;
+            align-items: start;
+          "
+          class="contact-grid"
+        >
+          <!-- Contact Info -->
+          <div class="card">
+            <h3 style="margin-bottom: 24px">Contact Information</h3>
+
+            <div style="display: flex; gap: 14px; margin-bottom: 20px">
+              <div
+                style="
+                  width: 44px;
+                  height: 44px;
+                  background: var(--gray-100);
+                  border-radius: var(--radius);
+                  display: flex;
+                  align-items: center;
+                  justify-content: center;
+                  color: var(--navy);
+                  flex-shrink: 0;
+                "
+              >
+                <i class="fas fa-envelope"></i>
+              </div>
+              <div>
+                <strong
+                  style="display: block; color: var(--navy); margin-bottom: 4px"
+                  >Email</strong
+                >
+                <p style="font-size: 0.9rem" id="contactEmailDisplay">
+                  Loading...
+                </p>
+              </div>
+            </div>
+
+            <div style="display: flex; gap: 14px; margin-bottom: 20px">
+              <div
+                style="
+                  width: 44px;
+                  height: 44px;
+                  background: var(--gray-100);
+                  border-radius: var(--radius);
+                  display: flex;
+                  align-items: center;
+                  justify-content: center;
+                  color: var(--navy);
+                  flex-shrink: 0;
+                "
+              >
+                <i class="fas fa-phone"></i>
+              </div>
+              <div>
+                <strong
+                  style="display: block; color: var(--navy); margin-bottom: 4px"
+                  >Phone</strong
+                >
+                <p style="font-size: 0.9rem" id="contactPhoneDisplay">
+                  Loading...
+                </p>
+              </div>
+            </div>
+
+            <div style="display: flex; gap: 14px; margin-bottom: 20px">
+              <div
+                style="
+                  width: 44px;
+                  height: 44px;
+                  background: var(--gray-100);
+                  border-radius: var(--radius);
+                  display: flex;
+                  align-items: center;
+                  justify-content: center;
+                  color: var(--navy);
+                  flex-shrink: 0;
+                "
+              >
+                <i class="fas fa-map-marker-alt"></i>
+              </div>
+              <div>
+                <strong
+                  style="display: block; color: var(--navy); margin-bottom: 4px"
+                  >Location</strong
+                >
+                <p style="font-size: 0.9rem" id="contactAddressDisplay">
+                  Loading...
+                </p>
+              </div>
+            </div>
+
+            <div style="display: flex; gap: 14px">
+              <div
+                style="
+                  width: 44px;
+                  height: 44px;
+                  background: var(--gray-100);
+                  border-radius: var(--radius);
+                  display: flex;
+                  align-items: center;
+                  justify-content: center;
+                  color: var(--navy);
+                  flex-shrink: 0;
+                "
+              >
+                <i class="fas fa-clock"></i>
+              </div>
+              <div>
+                <strong
+                  style="display: block; color: var(--navy); margin-bottom: 4px"
+                  >Rehearsals</strong
+                >
+                <p style="font-size: 0.9rem" id="contactRehearsalsDisplay">
+                  Communicated based on upcoming events
+                </p>
+              </div>
+            </div>
+          </div>
+
+          <!-- Contact Form -->
+          <div class="card">
+            <h3 style="margin-bottom: 24px">Send Us a Message</h3>
+            <form id="contactForm">
+              <div class="form-group">
+                <label>Full Name *</label>
+                <input
+                  type="text"
+                  id="contactName"
+                  class="form-control"
+                  required
+                />
+              </div>
+              <div class="form-group">
+                <label>Email *</label>
+                <input
+                  type="email"
+                  id="contactEmail"
+                  class="form-control"
+                  required
+                />
+              </div>
+              <div class="form-group">
+                <label>Subject *</label>
+                <select id="contactSubject" class="form-control" required>
+                  <option value="">Select a topic</option>
+                  <option>Joining the Band</option>
+                  <option>Event Booking</option>
+                  <option>Merchandise Order</option>
+                  <option>Music Collaboration</option>
+                  <option>General Inquiry</option>
+                </select>
+              </div>
+              <div class="form-group">
+                <label>Message *</label>
+                <textarea
+                  id="contactMessage"
+                  class="form-control"
+                  rows="5"
+                  required
+                ></textarea>
+              </div>
+              <div id="contactStatus" style="display: none"></div>
+              <button type="submit" class="btn btn-primary btn-block btn-lg">
+                <i class="fas fa-paper-plane"></i> Send Message
+              </button>
+            </form>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <style>
+      @media (max-width: 768px) {
+        .contact-grid {
+          grid-template-columns: 1fr !important;
+        }
+      }
+    </style>
+
+    <div id="footer-placeholder"></div>
+
+    <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-auth-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-database-compat.js"></script>
+    <script src="js/firebase-config.js"></script>
+    <script src="js/main.js"></script>
+
+    <script>
+      // ============================================
+      // LOAD CONTACT INFO FROM SETTINGS
+      // ============================================
+      db.ref("config/siteSettings").on("value", (snapshot) => {
+        const config = snapshot.val() || {};
+        document.getElementById("contactEmailDisplay").textContent =
+          config.contactEmail || "kealebogabigboy@gmail.com";
+        document.getElementById("contactPhoneDisplay").textContent =
+          config.contactPhone || "Not set";
+        document.getElementById("contactAddressDisplay").textContent =
+          config.address || "27 Rapulawa St, Meadowlands East Zone 2, Gauteng";
+        document.getElementById("contactRehearsalsDisplay").textContent =
+          config.rehearsals || "Communicated based on upcoming events";
+      });
+
+      // ============================================
+      // CONTACT FORM SUBMISSION
+      // ============================================
+      document
+        .getElementById("contactForm")
+        .addEventListener("submit", async (e) => {
+          e.preventDefault();
+
+          const statusDiv = document.getElementById("contactStatus");
+          const submitBtn = e.target.querySelector('button[type="submit"]');
+
+          const name = document.getElementById("contactName").value.trim();
+          const email = document.getElementById("contactEmail").value.trim();
+          const subject = document.getElementById("contactSubject").value;
+          const message = document
+            .getElementById("contactMessage")
+            .value.trim();
+
+          submitBtn.disabled = true;
+          submitBtn.innerHTML =
+            '<i class="fas fa-spinner fa-spin"></i> Sending...';
+
+          try {
+            // 1. Save to database
+            await db.ref("messages").push({
+              name,
+              email,
+              subject,
+              message,
+              status: "unread",
+              createdAt: new Date().toISOString(),
+            });
+
+            // 2. Send email notification (doesn't fail form if it errors)
+            if (typeof emailjs !== "undefined") {
+              try {
+                await emailjs.send("service_abu09wv", "template_universal", {
+                  to_email: "kealebogabigboy@gmail.com",
+                  to_name: "Admin",
+                  email_title: `📩 New Contact: ${subject}`,
+                  email_body: `
+                  <p><strong>From:</strong> ${name} &lt;${email}&gt;</p>
+                  <div style="background: #F8F9FB; padding: 16px; border-radius: 6px; margin: 16px 0; white-space: pre-wrap;">${message}</div>
+                `,
+                  cta_url: `mailto:${email}`,
+                  cta_text: "Reply to Sender",
+                  reply_to: email,
+                });
+                console.log("✓ Contact email sent");
+              } catch (emailErr) {
+                console.warn("Email notification failed:", emailErr);
+              }
+            }
+
+            statusDiv.className = "alert alert-success";
+            statusDiv.style.display = "flex";
+            statusDiv.innerHTML = `
+            <i class="fas fa-check-circle"></i>
+            <div>
+              <strong>Message sent!</strong><br>
+              Thank you for reaching out. We'll get back to you soon.
+            </div>
+          `;
+            e.target.reset();
+          } catch (err) {
+            console.error("Contact form error:", err);
+            statusDiv.className = "alert alert-danger";
+            statusDiv.style.display = "flex";
+            statusDiv.innerHTML =
+              '<i class="fas fa-exclamation-triangle"></i> Failed to send. Please try again.';
+          } finally {
+            submitBtn.disabled = false;
+            submitBtn.innerHTML =
+              '<i class="fas fa-paper-plane"></i> Send Message';
+          }
+        });
+
+      // ============================================
+      // HERO SLIDESHOW
+      // ============================================
+      (function initHeroSlideshow() {
+        const slides = document.querySelectorAll(".hero-slide");
+        const dotsContainer = document.getElementById("heroDots");
+        if (slides.length === 0 || !dotsContainer) return;
+
+        let current = 0;
+        let interval;
+
+        slides.forEach((_, i) => {
+          const dot = document.createElement("button");
+          dot.style.cssText = `width: 12px; height: 12px; border-radius: 50%; border: 2px solid white; background: ${i === 0 ? "white" : "transparent"}; cursor: pointer; padding: 0; transition: all 0.3s;`;
+          dot.setAttribute("aria-label", `Go to slide ${i + 1}`);
+          dot.onclick = () => goToSlide(i);
+          dotsContainer.appendChild(dot);
+        });
+
+        const dots = dotsContainer.querySelectorAll("button");
+
+        function goToSlide(index) {
+          slides[current].classList.remove("active");
+          dots[current].style.background = "transparent";
+          current = index;
+          slides[current].classList.add("active");
+          dots[current].style.background = "white";
+          clearInterval(interval);
+          interval = setInterval(nextSlide, 5000);
+        }
+
+        function nextSlide() {
+          goToSlide((current + 1) % slides.length);
+        }
+
+        interval = setInterval(nextSlide, 5000);
+      })();
+    </script>
+  </body>
+</html>

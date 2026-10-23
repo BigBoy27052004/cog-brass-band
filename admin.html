@@ -1,0 +1,423 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Admin Panel - C.O.G Brass Band</title>
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+    />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="css/style.css" />
+
+    <script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@3/dist/email.min.js"></script>
+    <script>
+      emailjs.init("988gYmds0vunFnriJ");
+    </script>
+
+    <script src="https://upload-widget.cloudinary.com/global/all.js"></script>
+    <script src="js/cloudinary-config.js"></script>
+  </head>
+  <body data-page="admin">
+    <div id="header-placeholder"></div>
+
+    <section class="section">
+      <div class="container">
+        <div class="section-header" style="text-align: left">
+          <h2>Admin Panel</h2>
+          <p>Manage band members, merchandise, events, and content</p>
+        </div>
+
+        <div
+          style="
+            display: flex;
+            gap: 4px;
+            margin-bottom: 24px;
+            border-bottom: 1px solid var(--gray-200);
+            overflow-x: auto;
+          "
+        >
+          <button
+            class="tab-btn active"
+            data-tab="members"
+            style="
+              padding: 12px 20px;
+              background: none;
+              border: none;
+              border-bottom: 3px solid var(--navy);
+              color: var(--navy);
+              font-weight: 600;
+              cursor: pointer;
+              white-space: nowrap;
+            "
+          >
+            Members
+          </button>
+          <button
+            class="tab-btn"
+            data-tab="merch"
+            style="
+              padding: 12px 20px;
+              background: none;
+              border: none;
+              color: var(--text-light);
+              font-weight: 600;
+              cursor: pointer;
+              white-space: nowrap;
+            "
+          >
+            Merchandise
+          </button>
+          <button
+            class="tab-btn"
+            data-tab="events"
+            style="
+              padding: 12px 20px;
+              background: none;
+              border: none;
+              color: var(--text-light);
+              font-weight: 600;
+              cursor: pointer;
+              white-space: nowrap;
+            "
+          >
+            Events
+          </button>
+          <button
+            class="tab-btn"
+            data-tab="songs"
+            style="
+              padding: 12px 20px;
+              background: none;
+              border: none;
+              color: var(--text-light);
+              font-weight: 600;
+              cursor: pointer;
+              white-space: nowrap;
+            "
+          >
+            Songs
+          </button>
+          <button
+            class="tab-btn"
+            data-tab="announcements"
+            style="
+              padding: 12px 20px;
+              background: none;
+              border: none;
+              color: var(--text-light);
+              font-weight: 600;
+              cursor: pointer;
+              white-space: nowrap;
+            "
+          >
+            Announcements
+          </button>
+          <button
+            class="tab-btn"
+            data-tab="settings"
+            style="
+              padding: 12px 20px;
+              background: none;
+              border: none;
+              color: var(--text-light);
+              font-weight: 600;
+              cursor: pointer;
+              white-space: nowrap;
+            "
+          >
+            Settings
+          </button>
+          <button
+            class="tab-btn"
+            data-tab="messages"
+            style="
+              padding: 12px 20px;
+              background: none;
+              border: none;
+              color: var(--text-light);
+              font-weight: 600;
+              cursor: pointer;
+              white-space: nowrap;
+            "
+          >
+            Messages
+          </button>
+        </div>
+
+        <div class="tab-content" id="tab-members">
+          <div
+            style="
+              display: grid;
+              grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+              gap: 16px;
+              margin-bottom: 24px;
+            "
+          >
+            <div class="stat-card">
+              <div class="stat-card-icon"><i class="fas fa-users"></i></div>
+              <div class="stat-card-value" id="totalMembers">0</div>
+              <div class="stat-card-label">Total Members</div>
+            </div>
+            <div class="stat-card">
+              <div class="stat-card-icon"><i class="fas fa-clock"></i></div>
+              <div class="stat-card-value" id="pendingMembers">0</div>
+              <div class="stat-card-label">Pending Approval</div>
+            </div>
+            <div class="stat-card">
+              <div class="stat-card-icon">
+                <i class="fas fa-birthday-cake"></i>
+              </div>
+              <div class="stat-card-value" id="birthdayCount">0</div>
+              <div class="stat-card-label">Birthdays This Month</div>
+            </div>
+          </div>
+
+          <div class="table-container">
+            <table>
+              <thead>
+                <tr>
+                  <th>Member</th>
+                  <th>Instrument</th>
+                  <th>Birthday</th>
+                  <th>Status</th>
+                  <th>Role</th>
+                  <th>Actions</th>
+                </tr>
+              </thead>
+              <tbody id="membersTable">
+                <tr>
+                  <td colspan="6" style="text-align: center; padding: 40px">
+                    <div class="spinner"></div>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+        <div class="tab-content" id="tab-merch" style="display: none">
+          <div
+            style="
+              display: flex;
+              justify-content: space-between;
+              margin-bottom: 20px;
+              align-items: center;
+              flex-wrap: wrap;
+              gap: 12px;
+            "
+          >
+            <div>
+              <h3>Merchandise Items</h3>
+              <p
+                style="
+                  font-size: 0.85rem;
+                  color: var(--text-light);
+                  margin-top: 4px;
+                "
+              >
+                Customers order via the contact page. Use "In Stock" toggle to
+                hide order buttons.
+              </p>
+            </div>
+            <button class="btn btn-primary" onclick="openMerchModal()">
+              <i class="fas fa-plus"></i> Add Item
+            </button>
+          </div>
+          <div class="table-container">
+            <table>
+              <thead>
+                <tr>
+                  <th>Item</th>
+                  <th>Price</th>
+                  <th>Colors</th>
+                  <th>Stock</th>
+                  <th>Actions</th>
+                </tr>
+              </thead>
+              <tbody id="merchTable"></tbody>
+            </table>
+          </div>
+        </div>
+
+        <div class="tab-content" id="tab-events" style="display: none">
+          <div
+            style="
+              display: flex;
+              justify-content: space-between;
+              margin-bottom: 20px;
+              align-items: center;
+              flex-wrap: wrap;
+              gap: 12px;
+            "
+          >
+            <h3>Upcoming Events</h3>
+            <button class="btn btn-primary" onclick="openEventModal()">
+              <i class="fas fa-plus"></i> Add Event
+            </button>
+          </div>
+          <div class="card-grid" id="eventsGrid"></div>
+        </div>
+
+        <div class="tab-content" id="tab-songs" style="display: none">
+          <div
+            style="
+              display: flex;
+              justify-content: space-between;
+              margin-bottom: 20px;
+              align-items: center;
+              flex-wrap: wrap;
+              gap: 12px;
+            "
+          >
+            <h3>Songs to Learn</h3>
+            <button class="btn btn-primary" onclick="openSongModal()">
+              <i class="fas fa-plus"></i> Add Song
+            </button>
+          </div>
+          <div class="card-grid" id="songsGrid"></div>
+        </div>
+
+        <div class="tab-content" id="tab-announcements" style="display: none">
+          <div
+            style="
+              display: flex;
+              justify-content: space-between;
+              margin-bottom: 20px;
+              align-items: center;
+              flex-wrap: wrap;
+              gap: 12px;
+            "
+          >
+            <h3>Announcements</h3>
+            <button class="btn btn-primary" onclick="openAnnouncementModal()">
+              <i class="fas fa-plus"></i> New Announcement
+            </button>
+          </div>
+          <div id="announcementsList"></div>
+        </div>
+
+        <div class="tab-content" id="tab-messages" style="display: none">
+          <div
+            style="
+              display: flex;
+              justify-content: space-between;
+              margin-bottom: 20px;
+              align-items: center;
+              flex-wrap: wrap;
+              gap: 12px;
+            "
+          >
+            <h3>Contact Messages</h3>
+            <span class="badge badge-member" id="unreadCount">0 unread</span>
+          </div>
+          <div id="messagesList"></div>
+        </div>
+
+        <div class="tab-content" id="tab-settings" style="display: none">
+          <div class="card">
+            <h3 style="margin-bottom: 20px">Site Settings</h3>
+            <form id="settingsForm">
+              <div class="form-group">
+                <label>Band Name</label>
+                <input type="text" id="settingBandName" class="form-control" />
+              </div>
+              <div class="form-group">
+                <label>Tagline</label>
+                <input type="text" id="settingTagline" class="form-control" />
+              </div>
+              <div class="form-group">
+                <label>Bio / Description</label>
+                <textarea
+                  id="settingBio"
+                  class="form-control"
+                  rows="4"
+                ></textarea>
+              </div>
+              <div class="form-group">
+                <label>Contact Email</label>
+                <input type="email" id="settingEmail" class="form-control" />
+              </div>
+              <div class="form-group">
+                <label>Contact Phone</label>
+                <input type="tel" id="settingPhone" class="form-control" />
+              </div>
+              <div class="form-group">
+                <label>Address</label>
+                <input type="text" id="settingAddress" class="form-control" />
+              </div>
+              <div class="form-group">
+                <label>Rehearsal Info</label>
+                <input
+                  type="text"
+                  id="settingRehearsals"
+                  class="form-control"
+                  placeholder="Communicated based on upcoming events"
+                />
+              </div>
+              <button type="submit" class="btn btn-primary">
+                <i class="fas fa-save"></i> Save Settings
+              </button>
+            </form>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <div id="footer-placeholder"></div>
+
+    <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-auth-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-database-compat.js"></script>
+    <script src="js/firebase-config.js"></script>
+    <script src="js/main.js"></script>
+    <script src="js/admin.js"></script>
+
+    <script>
+      auth.onAuthStateChanged(async (user) => {
+        if (!user) {
+          window.location.href = "login.html";
+          return;
+        }
+
+        const roleSnapshot = await db.ref("roles/" + user.uid).once("value");
+        if (roleSnapshot.val() !== "admin") {
+          alert("Access denied. Admin only.");
+          window.location.href = "dashboard.html";
+          return;
+        }
+
+        loadMembers();
+        loadMerchandise();
+        loadEvents();
+        loadSongs();
+        loadAnnouncements();
+        loadSettings();
+        loadMessages();
+      });
+
+      document.querySelectorAll(".tab-btn").forEach((btn) => {
+        btn.addEventListener("click", () => {
+          document.querySelectorAll(".tab-btn").forEach((b) => {
+            b.style.borderBottom = "none";
+            b.style.color = "var(--text-light)";
+            b.classList.remove("active");
+          });
+          btn.style.borderBottom = "3px solid var(--navy)";
+          btn.style.color = "var(--navy)";
+          btn.classList.add("active");
+
+          document
+            .querySelectorAll(".tab-content")
+            .forEach((c) => (c.style.display = "none"));
+          document.getElementById("tab-" + btn.dataset.tab).style.display =
+            "block";
+        });
+      });
+    </script>
+  </body>
+</html>

@@ -1,0 +1,71 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>My Dashboard - C.O.G Brass Band</title>
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+    />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="css/style.css" />
+  </head>
+  <body data-page="dashboard">
+    <div id="header-placeholder"></div>
+
+    <section class="section">
+      <div class="container">
+        <div
+          style="
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 32px;
+            flex-wrap: wrap;
+            gap: 12px;
+          "
+        >
+          <div>
+            <h2 id="welcomeName">Welcome back!</h2>
+            <p style="color: var(--text-light)" id="memberInfo">Loading...</p>
+          </div>
+          <div class="badge badge-member" id="memberStatus">Member</div>
+        </div>
+
+        <div style="margin-bottom: 32px">
+          <h3 style="margin-bottom: 16px">
+            <i class="fas fa-bullhorn"></i> Announcements
+          </h3>
+          <div id="announcementsList"></div>
+        </div>
+
+        <div style="margin-bottom: 32px">
+          <h3 style="margin-bottom: 16px">
+            <i class="fas fa-music"></i> Songs to Learn
+          </h3>
+          <div class="card-grid" id="songsList"></div>
+        </div>
+
+        <div style="margin-bottom: 32px">
+          <h3 style="margin-bottom: 16px">
+            <i class="fas fa-calendar"></i> Upcoming Events
+          </h3>
+          <div class="card-grid" id="eventsList"></div>
+        </div>
+      </div>
+    </section>
+
+    <div id="footer-placeholder"></div>
+
+    <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-auth-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-database-compat.js"></script>
+    <script src="js/firebase-config.js"></script>
+    <script src="js/main.js"></script>
+    <script src="js/dashboard.js"></script>
+  </body>
+</html>

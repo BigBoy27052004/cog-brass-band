@@ -1,0 +1,403 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Our Music - C.O.G Brass Band</title>
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+    />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="css/style.css" />
+  </head>
+  <body data-page="music">
+    <div id="header-placeholder"></div>
+
+    <section class="hero" style="padding: 60px 0; min-height: auto">
+      <!-- Slideshow background -->
+      <div class="hero-slideshow" id="heroSlideshow">
+        <div
+          class="hero-slide active"
+          style="background-image: url(&quot;images/hero-1.jpeg&quot;)"
+        ></div>
+        <div
+          class="hero-slide"
+          style="background-image: url(&quot;images/hero-2.jpeg&quot;)"
+        ></div>
+        <div
+          class="hero-slide"
+          style="background-image: url(&quot;images/hero-3.jpeg&quot;)"
+        ></div>
+        <div
+          class="hero-slide"
+          style="background-image: url(&quot;images/hero-4.jpg&quot;)"
+        ></div>
+      </div>
+
+      <!-- Dots indicator -->
+      <div
+        id="heroDots"
+        style="
+          position: absolute;
+          bottom: 30px;
+          left: 50%;
+          transform: translateX(-50%);
+          display: flex;
+          gap: 10px;
+          z-index: 3;
+        "
+      ></div>
+
+      <div class="container">
+        <div class="hero-content">
+          <div class="hero-badge"><i class="fas fa-music"></i> Music</div>
+          <h2>Our Music</h2>
+          <p>Worship through the sound of brass</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- Featured Album -->
+    <section class="section">
+      <div class="container">
+        <div class="section-header">
+          <h2>Featured Album</h2>
+          <p>Our debut worship project</p>
+        </div>
+
+        <div class="card" style="max-width: 900px; margin: 0 auto">
+          <div
+            style="
+              display: grid;
+              grid-template-columns: 300px 1fr;
+              gap: 40px;
+              align-items: center;
+            "
+          >
+            <!-- Album Cover -->
+            <div style="position: relative">
+              <img
+                src="images/album-bophelo.png"
+                alt="Bophelo Ke Wena Album Cover"
+                style="
+                  width: 100%;
+                  border-radius: var(--radius-lg);
+                  box-shadow: var(--shadow-lg);
+                  display: block;
+                "
+              />
+              <div
+                style="
+                  position: absolute;
+                  bottom: 12px;
+                  right: 12px;
+                  background: var(--gold);
+                  color: var(--navy);
+                  padding: 6px 14px;
+                  border-radius: 100px;
+                  font-weight: 700;
+                  font-size: 0.75rem;
+                  letter-spacing: 0.05em;
+                "
+              >
+                PHILIPPIANS 4:13
+              </div>
+            </div>
+
+            <!-- Album Info -->
+            <div>
+              <div class="badge badge-admin" style="margin-bottom: 12px">
+                🎵 Debut Album
+              </div>
+              <h3 style="font-size: 2rem; margin-bottom: 12px">
+                Bophelo Ke Wena
+              </h3>
+              <p style="margin-bottom: 16px; color: var(--text-light)">
+                <em
+                  >"I can do all things through Christ who strengthens me" —
+                  Philippians 4:13</em
+                >
+              </p>
+              <p style="margin-bottom: 24px">
+                Twelve powerful tracks of worship, blending traditional hymns
+                with contemporary arrangements for brass ensemble. Every note
+                lifted in praise to the King.
+              </p>
+
+              <div style="display: flex; gap: 12px; flex-wrap: wrap">
+                <a
+                  href="https://youtube.com/playlist?list=PLWqMlTyfpV7D58oFebO7hz6o5TNlzcwYK&si=VIfSrsNFcjlbn5Wg"
+                  target="_blank"
+                  class="btn btn-primary"
+                >
+                  <i class="fab fa-youtube"></i> Listen to Full Album
+                </a>
+                <a
+                  href="https://www.youtube.com/watch?v=61lantxzqnM"
+                  target="_blank"
+                  class="btn btn-gold"
+                >
+                  <i class="fas fa-play"></i> Watch Promo
+                </a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Promo Video -->
+    <section class="section" style="background: var(--white)">
+      <div class="container">
+        <div class="section-header">
+          <h2>Promo Video</h2>
+          <p>"Pula Tsa Lehlohonolo" — the first single from our album</p>
+        </div>
+
+        <div
+          class="card"
+          style="max-width: 900px; margin: 0 auto; padding: 20px"
+        >
+          <a
+            href="https://www.youtube.com/watch?v=61lantxzqnM"
+            target="_blank"
+            rel="noopener noreferrer"
+            style="
+              display: block;
+              position: relative;
+              width: 100%;
+              aspect-ratio: 16 / 9;
+              border-radius: var(--radius);
+              overflow: hidden;
+              background: #000
+                url(&quot;https://img.youtube.com/vi/61lantxzqnM/hqdefault.jpg&quot;)
+                center/cover no-repeat;
+              cursor: pointer;
+              text-decoration: none;
+            "
+          >
+            <div
+              style="
+                position: absolute;
+                inset: 0;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                background: rgba(0, 0, 0, 0.2);
+                transition: background 0.3s ease;
+              "
+              onmouseover="this.style.background = 'rgba(0, 0, 0, 0.4)'"
+              onmouseout="this.style.background = 'rgba(0, 0, 0, 0.2)'"
+            >
+              <div
+                style="
+                  width: 80px;
+                  height: 80px;
+                  background: #ff0000;
+                  border-radius: 50%;
+                  display: flex;
+                  align-items: center;
+                  justify-content: center;
+                  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.5);
+                "
+              >
+                <i
+                  class="fas fa-play"
+                  style="color: white; font-size: 32px; margin-left: 4px"
+                ></i>
+              </div>
+            </div>
+          </a>
+          <p style="text-align: center; margin-top: 16px">
+            <a
+              href="https://www.youtube.com/watch?v=61lantxzqnM"
+              target="_blank"
+              class="btn btn-secondary btn-sm"
+            >
+              <i class="fab fa-youtube"></i> Open on YouTube
+            </a>
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <!-- Tracklist -->
+    <section class="section">
+      <div class="container">
+        <div class="section-header">
+          <h2>Tracklist</h2>
+          <p>Bophelo Ke Wena — 12 songs of worship</p>
+        </div>
+
+        <div
+          class="card"
+          style="max-width: 800px; margin: 0 auto; padding: 0; overflow: hidden"
+        >
+          <div id="tracklist">
+            <!-- Tracks rendered by JS -->
+          </div>
+        </div>
+
+        <div style="text-align: center; margin-top: 32px">
+          <a
+            href="https://youtube.com/playlist?list=PLWqMlTyfpV7D58oFebO7hz6o5TNlzcwYK&si=VIfSrsNFcjlbn5Wg"
+            target="_blank"
+            class="btn btn-primary btn-lg"
+          >
+            <i class="fab fa-youtube"></i> Play Full Album on YouTube
+          </a>
+        </div>
+      </div>
+    </section>
+
+    <!-- Streaming Platforms -->
+    <section class="section" style="background: var(--white)">
+      <div class="container">
+        <div class="section-header">
+          <h2>Stream "Bophelo Ke Wena"</h2>
+          <p>Available on all major platforms</p>
+        </div>
+
+        <div class="platform-grid" style="max-width: 700px; margin: 0 auto">
+          <a
+            href="https://youtube.com/playlist?list=PLWqMlTyfpV7D58oFebO7hz6o5TNlzcwYK&si=VIfSrsNFcjlbn5Wg"
+            target="_blank"
+            class="platform-card"
+          >
+            <div class="platform-icon youtube">
+              <i class="fab fa-youtube"></i>
+            </div>
+            <strong>YouTube</strong>
+          </a>
+          <a
+            href="https://open.spotify.com/artist/741MLklI0dOpppxvXJwnit?si=sjuTlNLNSwWvltotc-IoHA"
+            target="_blank"
+            class="platform-card"
+          >
+            <div class="platform-icon spotify">
+              <i class="fab fa-spotify"></i>
+            </div>
+            <strong>Spotify</strong>
+          </a>
+          <a
+            href="https://music.apple.com/za/artist/c-o-g-royal-priesthood/1857877403"
+            target="_blank"
+            class="platform-card"
+          >
+            <div class="platform-icon apple"><i class="fab fa-apple"></i></div>
+            <strong>Apple Music</strong>
+          </a>
+          <a
+            href="https://music.amazon.com/artists/B0G4R6W1YH/c-o-g-royal-priesthood?marketplaceId=ATVPDKIKX0DER&musicTerritory=US&ref=dm_sh_jbU4lFb3bz8WvCW7BSP0lHWAE"
+            target="_blank"
+            class="platform-card"
+          >
+            <div class="platform-icon amazon">
+              <i class="fab fa-amazon"></i>
+            </div>
+            <strong>Amazon Music</strong>
+          </a>
+        </div>
+        <p
+          style="
+            text-align: center;
+            margin-top: 20px;
+            color: var(--text-light);
+            font-size: 0.9rem;
+          "
+        >
+          <i class="fas fa-info-circle"></i> Spotify, Apple Music & Amazon links
+          coming soon
+        </p>
+      </div>
+    </section>
+
+    <div id="footer-placeholder"></div>
+
+    <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-auth-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-database-compat.js"></script>
+    <script src="js/firebase-config.js"></script>
+    <script src="js/main.js"></script>
+
+    <script>
+      const albumTracks = [
+        { num: 1, title: "Hosanna" },
+        { num: 2, title: "Bophelo Ke Wena" },
+        { num: 3, title: "Influencer" },
+        { num: 4, title: "Ke Kgotso" },
+        { num: 5, title: "Moya Wa Kreste" },
+        { num: 6, title: "Oh Dark The Night" },
+        { num: 7, title: "Rorisang Matla" },
+        { num: 8, title: "Ejwale" },
+        { num: 9, title: "Ashwa Ke Lerato" },
+        { num: 10, title: "Ndikhokhele" },
+        { num: 11, title: "The Priest" },
+        { num: 12, title: "Pula Tsa Lehlohonolo" },
+      ];
+
+      const youtubePlaylist =
+        "https://youtube.com/playlist?list=PLWqMlTyfpV7D58oFebO7hz6o5TNlzcwYK&si=VIfSrsNFcjlbn5Wg";
+
+      document.getElementById("tracklist").innerHTML = albumTracks
+        .map(
+          (track) => `
+            <a href="${youtubePlaylist}" target="_blank" 
+               style="display: flex; align-items: center; gap: 16px; padding: 16px 24px; border-bottom: 1px solid var(--gray-200); color: var(--text); text-decoration: none; transition: background 0.2s;"
+               onmouseover="this.style.background='var(--gray-100)'"
+               onmouseout="this.style.background='transparent'">
+                <span style="width: 32px; height: 32px; background: var(--gray-100); border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: 700; color: var(--navy); font-size: 0.85rem; flex-shrink: 0;">
+                    ${track.num}
+                </span>
+                <span style="flex: 1; font-weight: 600;">${track.title}</span>
+                <i class="fas fa-play-circle" style="color: var(--gold); font-size: 1.25rem;"></i>
+            </a>
+        `,
+        )
+        .join("");
+
+      // ============================================
+      // HERO SLIDESHOW
+      // ============================================
+      (function initHeroSlideshow() {
+        const slides = document.querySelectorAll(".hero-slide");
+        const dotsContainer = document.getElementById("heroDots");
+        if (slides.length === 0 || !dotsContainer) return;
+
+        let current = 0;
+        let interval;
+
+        // Create dots
+        slides.forEach((_, i) => {
+          const dot = document.createElement("button");
+          dot.style.cssText = `width: 12px; height: 12px; border-radius: 50%; border: 2px solid white; background: ${i === 0 ? "white" : "transparent"}; cursor: pointer; padding: 0; transition: all 0.3s;`;
+          dot.setAttribute("aria-label", `Go to slide ${i + 1}`);
+          dot.onclick = () => goToSlide(i);
+          dotsContainer.appendChild(dot);
+        });
+
+        const dots = dotsContainer.querySelectorAll("button");
+
+        function goToSlide(index) {
+          slides[current].classList.remove("active");
+          dots[current].style.background = "transparent";
+          current = index;
+          slides[current].classList.add("active");
+          dots[current].style.background = "white";
+          clearInterval(interval);
+          interval = setInterval(nextSlide, 5000);
+        }
+
+        function nextSlide() {
+          goToSlide((current + 1) % slides.length);
+        }
+
+        interval = setInterval(nextSlide, 5000);
+      })();
+    </script>
+  </body>
+</html>

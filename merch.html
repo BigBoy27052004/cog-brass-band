@@ -1,0 +1,197 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Merchandise - C.O.G Brass Band</title>
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+    />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="css/style.css" />
+  </head>
+  <body data-page="merch">
+    <div id="header-placeholder"></div>
+
+    <section class="hero" style="padding: 60px 0; min-height: 300px">
+      <!-- Slideshow background -->
+      <div class="hero-slideshow" id="heroSlideshow">
+        <div
+          class="hero-slide active"
+          style="background-image: url(&quot;images/hero-1.jpeg&quot;)"
+        ></div>
+        <div
+          class="hero-slide"
+          style="background-image: url(&quot;images/hero-2.jpeg&quot;)"
+        ></div>
+        <div
+          class="hero-slide"
+          style="background-image: url(&quot;images/hero-3.jpeg&quot;)"
+        ></div>
+        <div
+          class="hero-slide"
+          style="background-image: url(&quot;images/hero-4.jpg&quot;)"
+        ></div>
+      </div>
+
+      <!-- Dots indicator -->
+      <div
+        id="heroDots"
+        style="
+          position: absolute;
+          bottom: 30px;
+          left: 50%;
+          transform: translateX(-50%);
+          display: flex;
+          gap: 10px;
+          z-index: 3;
+        "
+      ></div>
+
+      <div class="container" style="position: relative; z-index: 2">
+        <div class="hero-content">
+          <div class="hero-badge">
+            <i class="fas fa-shopping-bag"></i> Store
+          </div>
+          <h2>Official Merchandise</h2>
+          <p>Wear your support for the Royal Priesthood</p>
+        </div>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="container">
+        <div
+          class="alert alert-info"
+          style="max-width: 800px; margin: 0 auto 32px"
+        >
+          <i class="fas fa-info-circle"></i>
+          <div>
+            <strong>How to order:</strong> Browse our items below, then
+            <a
+              href="contact.html"
+              style="text-decoration: underline; font-weight: 600"
+              >contact us</a
+            >
+            with the item name, color, and quantity you'd like. We'll arrange
+            delivery and payment with you directly. All prices in South African
+            Rand (R).
+          </div>
+        </div>
+
+        <div class="card-grid" id="merchList">
+          <div class="spinner" style="grid-column: 1/-1"></div>
+        </div>
+      </div>
+    </section>
+
+    <div id="footer-placeholder"></div>
+
+    <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-auth-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-database-compat.js"></script>
+    <script src="js/firebase-config.js"></script>
+    <script src="js/main.js"></script>
+
+    <script>
+      async function loadMerch() {
+        const container = document.getElementById("merchList");
+        try {
+          const snapshot = await db.ref("merchandise").once("value");
+          const items = snapshot.val();
+
+          if (!items) {
+            container.innerHTML =
+              '<div class="empty-state" style="grid-column: 1/-1;"><i class="fas fa-shopping-bag"></i><h3>No merchandise available yet</h3></div>';
+            return;
+          }
+
+          container.innerHTML = Object.values(items)
+            .map(
+              (item) => `
+          <div class="merch-item">
+            <div class="merch-image">
+              <img src="${item.image}" alt="${item.name}" 
+                   onerror="this.src='https://via.placeholder.com/300x300/F1F3F7/9CA3AF?text=No+Image'">
+            </div>
+            <div class="merch-info">
+              <h3>${item.name}</h3>
+              <p>${item.description || ""}</p>
+              ${
+                item.colors && item.colors.length
+                  ? `
+                <p style="font-size: 0.85rem; color: var(--text-light); margin-bottom: 12px;">
+                  <strong>Colors:</strong> ${item.colors.join(", ")}
+                </p>
+              `
+                  : ""
+              }
+              <div class="merch-price-row">
+                <span class="merch-price">${formatRands(item.price)}</span>
+                ${
+                  item.inStock
+                    ? `<a href="contact.html" class="btn btn-primary btn-sm">
+                       <i class="fas fa-envelope"></i> Order
+                     </a>`
+                    : `<span class="badge badge-pending" style="padding: 8px 14px;">Out of Stock</span>`
+                }
+              </div>
+            </div>
+          </div>
+        `,
+            )
+            .join("");
+        } catch (e) {
+          console.error(e);
+          container.innerHTML =
+            '<div class="empty-state" style="grid-column: 1/-1;"><h3>Merch unavailable</h3></div>';
+        }
+      }
+
+      document.addEventListener("DOMContentLoaded", loadMerch);
+
+      // ============================================
+      // HERO SLIDESHOW
+      // ============================================
+      (function initHeroSlideshow() {
+        const slides = document.querySelectorAll(".hero-slide");
+        const dotsContainer = document.getElementById("heroDots");
+        if (slides.length === 0 || !dotsContainer) return;
+
+        let current = 0;
+        let interval;
+
+        // Create dots
+        slides.forEach((_, i) => {
+          const dot = document.createElement("button");
+          dot.style.cssText = `width: 12px; height: 12px; border-radius: 50%; border: 2px solid white; background: ${i === 0 ? "white" : "transparent"}; cursor: pointer; padding: 0; transition: all 0.3s;`;
+          dot.setAttribute("aria-label", `Go to slide ${i + 1}`);
+          dot.onclick = () => goToSlide(i);
+          dotsContainer.appendChild(dot);
+        });
+
+        const dots = dotsContainer.querySelectorAll("button");
+
+        function goToSlide(index) {
+          slides[current].classList.remove("active");
+          dots[current].style.background = "transparent";
+          current = index;
+          slides[current].classList.add("active");
+          dots[current].style.background = "white";
+          clearInterval(interval);
+          interval = setInterval(nextSlide, 5000);
+        }
+
+        function nextSlide() {
+          goToSlide((current + 1) % slides.length);
+        }
+
+        interval = setInterval(nextSlide, 5000);
+      })();
+    </script>
+  </body>
+</html>

@@ -1,0 +1,409 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Join the Band - C.O.G Brass Band</title>
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+    />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="css/style.css" />
+    <script src="https://upload-widget.cloudinary.com/global/all.js"></script>
+  </head>
+  <body>
+    <div id="header-placeholder"></div>
+
+    <section class="section">
+      <div class="container container-narrow">
+        <div class="section-header">
+          <h2>Join the Royal Priesthood</h2>
+          <p>Become part of our family of musicians</p>
+        </div>
+
+        <div class="card">
+          <div class="alert alert-info">
+            <i class="fas fa-info-circle"></i>
+            <div>
+              <strong>Registration Process:</strong>
+              After registering, your account will be reviewed by the band
+              master. You'll be notified once approved.
+            </div>
+          </div>
+
+          <form id="registerForm">
+            <div class="form-group">
+              <label>Full Name *</label>
+              <input type="text" id="fullName" class="form-control" required />
+            </div>
+            <div class="form-group">
+              <label>Email Address *</label>
+              <input type="email" id="email" class="form-control" required />
+            </div>
+            <div class="form-group">
+              <label>Phone Number *</label>
+              <input
+                type="tel"
+                id="phone"
+                class="form-control"
+                placeholder="+27 XX XXX XXXX"
+                required
+              />
+            </div>
+            <div class="form-group">
+              <label>Date of Birth *</label>
+              <input type="date" id="birthDate" class="form-control" required />
+              <p class="form-hint">We celebrate our members' birthdays!</p>
+            </div>
+            <div class="form-group">
+              <label>Primary Instrument *</label>
+              <select id="instrument" class="form-control" required>
+                <option value="">Select your instrument</option>
+                <option>Trumpet</option>
+                <option>Trombone</option>
+                <option>French Horn</option>
+                <option>Tuba</option>
+                <option>Euphonium</option>
+                <option>Baritone</option>
+                <option>Cornet</option>
+                <option>Flugelhorn</option>
+                <option>Percussion</option>
+                <option>Other">Other</option>
+                <option>None">I don't play an instrument yet</option>
+              </select>
+            </div>
+            <div
+              class="form-group"
+              id="otherInstrumentGroup"
+              style="display: none"
+            >
+              <label>Please specify</label>
+              <input type="text" id="otherInstrument" class="form-control" />
+            </div>
+            <div class="form-group">
+              <label>Musical Experience</label>
+              <select id="experience" class="form-control">
+                <option value="beginner">Beginner</option>
+                <option value="intermediate">Intermediate</option>
+                <option value="advanced">Advanced</option>
+                <option value="professional">Professional</option>
+              </select>
+            </div>
+            <div class="form-group">
+              <label>Photo in Band Uniform *</label>
+              <input type="hidden" id="uniformPhotoURL" />
+              <button
+                type="button"
+                id="uploadPhotoBtn"
+                class="btn btn-secondary btn-block"
+              >
+                <i class="fas fa-camera"></i>
+                <span id="uploadBtnText">Click to Upload Photo</span>
+              </button>
+              <div
+                id="photoPreview"
+                style="margin-top: 12px; text-align: center; display: none"
+              >
+                <img
+                  id="photoPreviewImg"
+                  style="
+                    max-width: 150px;
+                    border-radius: 12px;
+                    border: 2px solid var(--gold);
+                  "
+                />
+              </div>
+              <p class="form-hint">
+                <i class="fas fa-info-circle"></i>
+                Clear photo wearing the band uniform. Used for birthday
+                celebrations.
+              </p>
+            </div>
+            <div class="form-group">
+              <label>Password *</label>
+              <input
+                type="password"
+                id="password"
+                class="form-control"
+                required
+                minlength="6"
+              />
+              <p class="form-hint">Minimum 6 characters</p>
+            </div>
+            <div class="form-group">
+              <label>Confirm Password *</label>
+              <input
+                type="password"
+                id="confirmPassword"
+                class="form-control"
+                required
+              />
+            </div>
+
+            <div
+              id="registerError"
+              class="alert alert-danger"
+              style="display: none"
+            ></div>
+            <div
+              id="registerSuccess"
+              class="alert alert-success"
+              style="display: none"
+            ></div>
+
+            <button
+              type="submit"
+              class="btn btn-primary btn-lg btn-block"
+              id="submitBtn"
+            >
+              <i class="fas fa-user-plus"></i> Submit Registration
+            </button>
+          </form>
+
+          <p
+            style="
+              text-align: center;
+              margin-top: 24px;
+              color: var(--text-light);
+            "
+          >
+            Already have an account? <a href="login.html">Sign in here</a>
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <div id="footer-placeholder"></div>
+
+    <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-auth-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-database-compat.js"></script>
+    <script src="js/firebase-config.js"></script>
+    <script src="js/cloudinary-config.js"></script>
+    <script src="js/main.js"></script>
+
+    <script>
+      // ============================================
+      // INSTRUMENT OTHER FIELD
+      // ============================================
+      document
+        .getElementById("instrument")
+        .addEventListener("change", function () {
+          document.getElementById("otherInstrumentGroup").style.display =
+            this.value === "Other" ? "block" : "none";
+        });
+
+      // ============================================
+      // CLOUDINARY UPLOAD WIDGET
+      // ============================================
+      const uploadWidget = cloudinary.createUploadWidget(
+        {
+          cloudName: CLOUDINARY_CONFIG.cloudName,
+          uploadPreset: CLOUDINARY_CONFIG.uploadPreset,
+          sources: ["local", "camera"],
+          multiple: false,
+          maxFileSize: 2000000,
+          cropping: true,
+          croppingAspectRatio: 1,
+          croppingShowDimensions: true,
+          croppingCoordinatesMode: "custom",
+          showSkipCropButton: false,
+          folder: "cog-brass-band/members",
+          resourceType: "image",
+          clientAllowedFormats: ["jpg", "jpeg", "png", "webp"],
+        },
+        (error, result) => {
+          if (!error && result && result.event === "success") {
+            const photoURL = result.info.secure_url;
+            document.getElementById("uniformPhotoURL").value = photoURL;
+            document.getElementById("photoPreview").style.display = "block";
+            document.getElementById("photoPreviewImg").src = photoURL;
+            document.getElementById("uploadBtnText").textContent =
+              "Photo Uploaded ✓";
+            const btn = document.getElementById("uploadPhotoBtn");
+            btn.classList.remove("btn-secondary");
+            btn.classList.add("btn-success");
+          }
+          if (error) alert("Upload error: " + error.message);
+        },
+      );
+
+      document
+        .getElementById("uploadPhotoBtn")
+        .addEventListener("click", () => {
+          uploadWidget.open();
+        });
+
+      // ============================================
+      // REGISTER FORM SUBMIT
+      // ============================================
+      document
+        .getElementById("registerForm")
+        .addEventListener("submit", async (e) => {
+          e.preventDefault();
+
+          const submitBtn = document.getElementById("submitBtn");
+          const errorDiv = document.getElementById("registerError");
+          const successDiv = document.getElementById("registerSuccess");
+
+          errorDiv.style.display = "none";
+          successDiv.style.display = "none";
+
+          const fullName = document.getElementById("fullName").value.trim();
+          const email = document.getElementById("email").value.trim();
+          const phone = document.getElementById("phone").value.trim();
+          const birthDate = document.getElementById("birthDate").value;
+          let instrument = document.getElementById("instrument").value;
+          const otherInstrument = document
+            .getElementById("otherInstrument")
+            .value.trim();
+          const experience = document.getElementById("experience").value;
+          const photoURL = document.getElementById("uniformPhotoURL").value;
+          const password = document.getElementById("password").value;
+          const confirmPassword =
+            document.getElementById("confirmPassword").value;
+
+          // Validation
+          if (password !== confirmPassword) {
+            errorDiv.textContent = "Passwords do not match.";
+            errorDiv.style.display = "flex";
+            return;
+          }
+          if (password.length < 6) {
+            errorDiv.textContent = "Password must be at least 6 characters.";
+            errorDiv.style.display = "flex";
+            return;
+          }
+          if (instrument === "Other" && !otherInstrument) {
+            errorDiv.textContent = "Please specify your instrument.";
+            errorDiv.style.display = "flex";
+            return;
+          }
+          if (!photoURL) {
+            errorDiv.textContent =
+              "Please upload a photo in your band uniform.";
+            errorDiv.style.display = "flex";
+            return;
+          }
+          if (instrument === "Other") instrument = otherInstrument;
+
+          submitBtn.disabled = true;
+          submitBtn.innerHTML =
+            '<i class="fas fa-spinner fa-spin"></i> Creating account...';
+
+          let userId = null;
+
+          try {
+            // Step 1: Create Auth account (auto signs in)
+            const userCredential = await auth.createUserWithEmailAndPassword(
+              email,
+              password,
+            );
+            userId = userCredential.user.uid;
+
+            // Step 2: Save user data
+            submitBtn.innerHTML =
+              '<i class="fas fa-spinner fa-spin"></i> Saving your details...';
+            await db.ref("users/" + userId).set({
+              name: fullName,
+              email: email,
+              phone: phone,
+              birthDate: birthDate,
+              instrument: instrument,
+              experience: experience,
+              photoURL: photoURL,
+              status: "pending",
+              role: "member",
+              joinDate: new Date().toISOString(),
+            });
+
+            // Step 3: Save role
+            await db.ref("roles/" + userId).set("member");
+
+            // Step 4: IMMEDIATELY sign out
+            await auth.signOut();
+
+            // Step 5: Show success
+            successDiv.innerHTML = `
+                <i class="fas fa-check-circle"></i>
+                <div>
+                    <strong>Registration submitted successfully!</strong><br>
+                    Your account is pending approval by the band master. 
+                    You'll be able to log in once approved.
+                </div>
+            `;
+            successDiv.style.display = "flex";
+
+            // Reset form
+            document.getElementById("registerForm").reset();
+            document.getElementById("otherInstrumentGroup").style.display =
+              "none";
+            document.getElementById("photoPreview").style.display = "none";
+            document.getElementById("uploadBtnText").textContent =
+              "Click to Upload Photo";
+            document.getElementById("uniformPhotoURL").value = "";
+            document
+              .getElementById("uploadPhotoBtn")
+              .classList.remove("btn-success");
+            document
+              .getElementById("uploadPhotoBtn")
+              .classList.add("btn-secondary");
+
+            submitBtn.disabled = true;
+            submitBtn.innerHTML =
+              '<i class="fas fa-check"></i> Registered! Redirecting...';
+
+            // Redirect after 3s
+            setTimeout(() => {
+              window.location.href = "login.html";
+            }, 3000);
+          } catch (error) {
+            console.error("Registration error:", error);
+
+            // If Auth succeeded but something failed after, clean up
+            if (userId) {
+              try {
+                await db.ref("users/" + userId).remove();
+                await db.ref("roles/" + userId).remove();
+              } catch (cleanupErr) {
+                console.warn("Cleanup failed:", cleanupErr);
+              }
+
+              try {
+                await auth.currentUser.delete();
+              } catch (deleteErr) {
+                console.warn("Could not delete auth account:", deleteErr);
+                await auth.signOut();
+              }
+            }
+
+            let message = "Registration failed. Please try again.";
+            if (error.code === "auth/email-already-in-use") {
+              message =
+                "This email is already registered. Try logging in instead.";
+            } else if (error.code === "auth/invalid-email") {
+              message = "Please enter a valid email address.";
+            } else if (error.code === "auth/weak-password") {
+              message = "Password is too weak. Use at least 6 characters.";
+            } else if (
+              error.code === "PERMISSION_DENIED" ||
+              (error.message && error.message.includes("permission"))
+            ) {
+              message =
+                "Database permission error. Please contact the band master.";
+            }
+
+            errorDiv.textContent = message;
+            errorDiv.style.display = "flex";
+            submitBtn.disabled = false;
+            submitBtn.innerHTML =
+              '<i class="fas fa-user-plus"></i> Submit Registration';
+          }
+        });
+    </script>
+  </body>
+</html>

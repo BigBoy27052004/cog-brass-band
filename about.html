@@ -1,0 +1,233 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>About Us - C.O.G Brass Band</title>
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+    />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="css/style.css" />
+  </head>
+  <body data-page="about">
+    <div id="header-placeholder"></div>
+
+    <section class="hero" style="padding: 60px 0">
+      <!-- Slideshow background -->
+      <div class="hero-slideshow" id="heroSlideshow">
+        <div
+          class="hero-slide active"
+          style="background-image: url(&quot;images/hero-1.jpeg&quot;)"
+        ></div>
+        <div
+          class="hero-slide"
+          style="background-image: url(&quot;images/hero-2.jpeg&quot;)"
+        ></div>
+        <div
+          class="hero-slide"
+          style="background-image: url(&quot;images/hero-3.jpeg&quot;)"
+        ></div>
+        <div
+          class="hero-slide"
+          style="background-image: url(&quot;images/hero-4.jpg&quot;)"
+        ></div>
+      </div>
+
+      <!-- Dots indicator -->
+      <div
+        id="heroDots"
+        style="
+          position: absolute;
+          bottom: 30px;
+          left: 50%;
+          transform: translateX(-50%);
+          display: flex;
+          gap: 10px;
+          z-index: 3;
+        "
+      ></div>
+
+      <div class="container">
+        <div class="hero-content">
+          <div class="hero-badge"><i class="fas fa-info-circle"></i> About</div>
+          <h2>Our Story</h2>
+          <p>
+            A family of musicians dedicated to worshipping God through the power
+            of sound.
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="container container-narrow">
+        <div class="card">
+          <h3 style="margin-bottom: 16px">Who We Are</h3>
+          <p style="margin-bottom: 16px">
+            Welcome to the C.O.G Brass Band (Royal Priesthood) — a family of
+            musicians dedicated to worshipping God through the power of sound.
+            From rehearsals to powerful performances, we play with purpose,
+            unity, and passion.
+          </p>
+          <p style="margin-bottom: 16px">
+            We are a ministry of the Church of God, using brass instruments to
+            lift hearts and glorify the King through every note we play. Our
+            band is more than just musicians — we are brothers and sisters in
+            Christ, united by our calling to serve through music.
+          </p>
+          <p>
+            Join us as we honour our calling, lift hearts, and glorify the King
+            through every note we play.
+          </p>
+        </div>
+
+        <div
+          class="card"
+          style="
+            margin-top: 24px;
+            background: linear-gradient(135deg, var(--navy), var(--navy-light));
+            color: white;
+          "
+        >
+          <h3 style="color: var(--gold); margin-bottom: 16px">
+            <i class="fas fa-quote-left"></i> Our Mission
+          </h3>
+          <p
+            style="
+              color: rgba(255, 255, 255, 0.9);
+              font-size: 1.1rem;
+              font-style: italic;
+              line-height: 1.6;
+            "
+          >
+            "More Grace More Blessings! Welcome to C.O.G Brass Band (Royal
+            Priesthood) — a family of musicians dedicated to worshipping God
+            through the power of sound. From rehearsals to powerful
+            performances, we play with purpose, unity, and passion."
+          </p>
+        </div>
+
+        <div class="card" style="margin-top: 24px">
+          <h3 style="margin-bottom: 16px">
+            <i class="fas fa-crown" style="color: var(--gold)"></i> What We Do
+          </h3>
+          <ul style="list-style: none; padding: 0">
+            <li
+              style="padding: 12px 0; border-bottom: 1px solid var(--gray-200)"
+            >
+              <i
+                class="fas fa-check-circle"
+                style="color: var(--success); margin-right: 10px"
+              ></i>
+              Lead worship during Sunday services
+            </li>
+            <li
+              style="padding: 12px 0; border-bottom: 1px solid var(--gray-200)"
+            >
+              <i
+                class="fas fa-check-circle"
+                style="color: var(--success); margin-right: 10px"
+              ></i>
+              Perform at church events and special occasions
+            </li>
+            <li
+              style="padding: 12px 0; border-bottom: 1px solid var(--gray-200)"
+            >
+              <i
+                class="fas fa-check-circle"
+                style="color: var(--success); margin-right: 10px"
+              ></i>
+              Minister at community outreach programs
+            </li>
+            <li
+              style="padding: 12px 0; border-bottom: 1px solid var(--gray-200)"
+            >
+              <i
+                class="fas fa-check-circle"
+                style="color: var(--success); margin-right: 10px"
+              ></i>
+              Mentor young musicians in the church
+            </li>
+            <li style="padding: 12px 0">
+              <i
+                class="fas fa-check-circle"
+                style="color: var(--success); margin-right: 10px"
+              ></i>
+              Record and share worship music globally
+            </li>
+          </ul>
+        </div>
+
+        <div style="text-align: center; margin-top: 40px">
+          <a href="register.html" id="joinBandBtn" class="btn btn-primary btn-lg">
+            <i class="fas fa-user-plus"></i> Join Our Family
+          </a>
+        </div>
+      </div>
+    </section>
+
+    <div id="footer-placeholder"></div>
+
+    <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-auth-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-database-compat.js"></script>
+    <script src="js/firebase-config.js"></script>
+    <script src="js/main.js"></script>
+
+    <script>
+      // ============================================
+      // HERO SLIDESHOW
+      // ============================================
+      (function initHeroSlideshow() {
+        const slides = document.querySelectorAll(".hero-slide");
+        const dotsContainer = document.getElementById("heroDots");
+        if (slides.length === 0 || !dotsContainer) return;
+
+        let current = 0;
+        let interval;
+
+        // Create dots
+        slides.forEach((_, i) => {
+          const dot = document.createElement("button");
+          dot.style.cssText = `width: 12px; height: 12px; border-radius: 50%; border: 2px solid white; background: ${i === 0 ? "white" : "transparent"}; cursor: pointer; padding: 0; transition: all 0.3s;`;
+          dot.setAttribute("aria-label", `Go to slide ${i + 1}`);
+          dot.onclick = () => goToSlide(i);
+          dotsContainer.appendChild(dot);
+        });
+
+        const dots = dotsContainer.querySelectorAll("button");
+
+        function goToSlide(index) {
+          slides[current].classList.remove("active");
+          dots[current].style.background = "transparent";
+          current = index;
+          slides[current].classList.add("active");
+          dots[current].style.background = "white";
+          clearInterval(interval);
+          interval = setInterval(nextSlide, 5000);
+        }
+
+        function nextSlide() {
+          goToSlide((current + 1) % slides.length);
+        }
+
+        interval = setInterval(nextSlide, 5000);
+      })();
+
+      // ============================================
+      // HIDE "JOIN BAND" WHEN LOGGED IN
+      // ============================================
+      auth.onAuthStateChanged((user) => {
+        const joinBtn = document.getElementById("joinBandBtn");
+        if (joinBtn) {
+          joinBtn.style.display = user ? "none" : "inline-flex";
+        }
+      });
+    </script>
+  </body>
+</html>
