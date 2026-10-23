@@ -13,12 +13,277 @@
       rel="stylesheet"
     />
     <link rel="stylesheet" href="css/style.css" />
+
+    <style>
+      /* ============================================
+       MUSIC PLAYER STYLES
+       ============================================ */
+      .player-bar {
+        position: fixed;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        background: linear-gradient(
+          135deg,
+          var(--navy) 0%,
+          var(--navy-light) 100%
+        );
+        color: var(--white);
+        padding: 12px 20px;
+        display: none;
+        align-items: center;
+        gap: 16px;
+        box-shadow: 0 -4px 20px rgba(0, 0, 0, 0.3);
+        z-index: 8000;
+        border-top: 2px solid var(--gold);
+      }
+
+      .player-bar.active {
+        display: flex;
+      }
+
+      .player-close {
+        background: none;
+        border: none;
+        color: rgba(255, 255, 255, 0.7);
+        font-size: 1.4rem;
+        cursor: pointer;
+        padding: 4px;
+      }
+
+      .player-close:hover {
+        color: var(--gold);
+      }
+
+      .player-thumb {
+        width: 56px;
+        height: 56px;
+        border-radius: 6px;
+        overflow: hidden;
+        flex-shrink: 0;
+        background: #000;
+        cursor: pointer;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
+
+      .player-thumb img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+      }
+
+      .player-info {
+        flex: 1;
+        min-width: 0;
+      }
+
+      .player-title {
+        font-weight: 600;
+        font-size: 0.95rem;
+        color: var(--white);
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+      }
+
+      .player-artist {
+        font-size: 0.8rem;
+        color: var(--gold);
+        margin-top: 2px;
+      }
+
+      .player-controls {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+      }
+
+      .player-btn {
+        background: none;
+        border: none;
+        color: var(--white);
+        cursor: pointer;
+        font-size: 1.1rem;
+        padding: 8px;
+        border-radius: 50%;
+        transition: all 0.2s;
+      }
+
+      .player-btn:hover {
+        color: var(--gold);
+        background: rgba(255, 255, 255, 0.1);
+      }
+
+      .player-play-btn {
+        background: var(--gold);
+        color: var(--navy);
+        width: 44px;
+        height: 44px;
+        font-size: 1.1rem;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
+
+      .player-play-btn:hover {
+        background: var(--gold-light);
+        color: var(--navy);
+        transform: scale(1.05);
+      }
+
+      /* Hidden YouTube iframe container */
+      #ytPlayerContainer {
+        position: fixed;
+        top: -9999px;
+        left: -9999px;
+        width: 1px;
+        height: 1px;
+        opacity: 0;
+        pointer-events: none;
+      }
+
+      /* Tracklist */
+      .track-row {
+        display: flex;
+        align-items: center;
+        gap: 16px;
+        padding: 14px 24px;
+        border-bottom: 1px solid var(--gray-200);
+        color: var(--text);
+        cursor: pointer;
+        transition: background 0.2s;
+      }
+
+      .track-row:hover {
+        background: var(--gray-100);
+      }
+
+      .track-row.active {
+        background: linear-gradient(
+          90deg,
+          rgba(201, 162, 39, 0.1),
+          transparent
+        );
+        border-left: 4px solid var(--gold);
+        padding-left: 20px;
+      }
+
+      .track-num {
+        width: 32px;
+        height: 32px;
+        background: var(--gray-100);
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-weight: 700;
+        color: var(--navy);
+        font-size: 0.85rem;
+        flex-shrink: 0;
+      }
+
+      .track-row.active .track-num {
+        background: var(--gold);
+      }
+
+      .track-title {
+        flex: 1;
+        font-weight: 600;
+      }
+
+      .track-row.active .track-title {
+        color: var(--navy);
+      }
+
+      .track-play-icon {
+        color: var(--gold);
+        font-size: 1.25rem;
+        transition: all 0.2s;
+      }
+
+      .track-row.active .track-play-icon {
+        color: var(--navy);
+      }
+
+      .track-row:hover .track-play-icon {
+        transform: scale(1.15);
+      }
+
+      /* Playing indicator animation */
+      .playing-bars {
+        display: inline-flex;
+        gap: 2px;
+        align-items: flex-end;
+        height: 16px;
+      }
+
+      .playing-bars span {
+        width: 3px;
+        background: var(--gold);
+        border-radius: 1px;
+        animation: barBounce 0.8s ease-in-out infinite;
+      }
+
+      .playing-bars span:nth-child(1) {
+        height: 60%;
+        animation-delay: 0s;
+      }
+      .playing-bars span:nth-child(2) {
+        height: 100%;
+        animation-delay: 0.1s;
+      }
+      .playing-bars span:nth-child(3) {
+        height: 40%;
+        animation-delay: 0.2s;
+      }
+      .playing-bars span:nth-child(4) {
+        height: 80%;
+        animation-delay: 0.15s;
+      }
+
+      @keyframes barBounce {
+        0%,
+        100% {
+          transform: scaleY(0.5);
+        }
+        50% {
+          transform: scaleY(1);
+        }
+      }
+
+      /* Mobile adjustments */
+      @media (max-width: 640px) {
+        .player-bar {
+          padding: 10px 14px;
+          gap: 10px;
+        }
+        .player-thumb {
+          width: 44px;
+          height: 44px;
+        }
+        .player-title {
+          font-size: 0.85rem;
+        }
+        .player-artist {
+          font-size: 0.7rem;
+        }
+        .player-play-btn {
+          width: 40px;
+          height: 40px;
+        }
+        .player-btn {
+          font-size: 1rem;
+          padding: 6px;
+        }
+      }
+    </style>
   </head>
   <body data-page="music">
     <div id="header-placeholder"></div>
 
     <section class="hero" style="padding: 60px 0; min-height: auto">
-      <!-- Slideshow background -->
       <div class="hero-slideshow" id="heroSlideshow">
         <div
           class="hero-slide active"
@@ -37,8 +302,6 @@
           style="background-image: url(&quot;images/hero-4.jpg&quot;)"
         ></div>
       </div>
-
-      <!-- Dots indicator -->
       <div
         id="heroDots"
         style="
@@ -51,8 +314,7 @@
           z-index: 3;
         "
       ></div>
-
-      <div class="container">
+      <div class="container" style="position: relative; z-index: 2">
         <div class="hero-content">
           <div class="hero-badge"><i class="fas fa-music"></i> Music</div>
           <h2>Our Music</h2>
@@ -68,7 +330,6 @@
           <h2>Featured Album</h2>
           <p>Our debut worship project</p>
         </div>
-
         <div class="card" style="max-width: 900px; margin: 0 auto">
           <div
             style="
@@ -77,8 +338,8 @@
               gap: 40px;
               align-items: center;
             "
+            class="album-layout"
           >
-            <!-- Album Cover -->
             <div style="position: relative">
               <img
                 src="images/album-bophelo.png"
@@ -107,8 +368,6 @@
                 PHILIPPIANS 4:13
               </div>
             </div>
-
-            <!-- Album Info -->
             <div>
               <div class="badge badge-admin" style="margin-bottom: 12px">
                 🎵 Debut Album
@@ -127,141 +386,50 @@
                 with contemporary arrangements for brass ensemble. Every note
                 lifted in praise to the King.
               </p>
-
               <div style="display: flex; gap: 12px; flex-wrap: wrap">
+                <button class="btn btn-primary" onclick="playTrack(0)">
+                  <i class="fas fa-play"></i> Play Album
+                </button>
                 <a
                   href="https://youtube.com/playlist?list=PLWqMlTyfpV7D58oFebO7hz6o5TNlzcwYK&si=VIfSrsNFcjlbn5Wg"
                   target="_blank"
-                  class="btn btn-primary"
+                  class="btn btn-secondary"
                 >
-                  <i class="fab fa-youtube"></i> Listen to Full Album
-                </a>
-                <a
-                  href="https://www.youtube.com/watch?v=61lantxzqnM"
-                  target="_blank"
-                  class="btn btn-gold"
-                >
-                  <i class="fas fa-play"></i> Watch Promo
+                  <i class="fab fa-youtube"></i> Open on YouTube
                 </a>
               </div>
             </div>
           </div>
-        </div>
-      </div>
-    </section>
-
-    <!-- Promo Video -->
-    <section class="section" style="background: var(--white)">
-      <div class="container">
-        <div class="section-header">
-          <h2>Promo Video</h2>
-          <p>"Pula Tsa Lehlohonolo" — the first single from our album</p>
-        </div>
-
-        <div
-          class="card"
-          style="max-width: 900px; margin: 0 auto; padding: 20px"
-        >
-          <a
-            href="https://www.youtube.com/watch?v=61lantxzqnM"
-            target="_blank"
-            rel="noopener noreferrer"
-            style="
-              display: block;
-              position: relative;
-              width: 100%;
-              aspect-ratio: 16 / 9;
-              border-radius: var(--radius);
-              overflow: hidden;
-              background: #000
-                url(&quot;https://img.youtube.com/vi/61lantxzqnM/hqdefault.jpg&quot;)
-                center/cover no-repeat;
-              cursor: pointer;
-              text-decoration: none;
-            "
-          >
-            <div
-              style="
-                position: absolute;
-                inset: 0;
-                display: flex;
-                align-items: center;
-                justify-content: center;
-                background: rgba(0, 0, 0, 0.2);
-                transition: background 0.3s ease;
-              "
-              onmouseover="this.style.background = 'rgba(0, 0, 0, 0.4)'"
-              onmouseout="this.style.background = 'rgba(0, 0, 0, 0.2)'"
-            >
-              <div
-                style="
-                  width: 80px;
-                  height: 80px;
-                  background: #ff0000;
-                  border-radius: 50%;
-                  display: flex;
-                  align-items: center;
-                  justify-content: center;
-                  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.5);
-                "
-              >
-                <i
-                  class="fas fa-play"
-                  style="color: white; font-size: 32px; margin-left: 4px"
-                ></i>
-              </div>
-            </div>
-          </a>
-          <p style="text-align: center; margin-top: 16px">
-            <a
-              href="https://www.youtube.com/watch?v=61lantxzqnM"
-              target="_blank"
-              class="btn btn-secondary btn-sm"
-            >
-              <i class="fab fa-youtube"></i> Open on YouTube
-            </a>
-          </p>
         </div>
       </div>
     </section>
 
     <!-- Tracklist -->
-    <section class="section">
+    <section
+      class="section"
+      style="background: var(--white); padding-bottom: 120px"
+    >
       <div class="container">
         <div class="section-header">
           <h2>Tracklist</h2>
-          <p>Bophelo Ke Wena — 12 songs of worship</p>
+          <p>Click any track to play — no redirects</p>
         </div>
-
         <div
           class="card"
           style="max-width: 800px; margin: 0 auto; padding: 0; overflow: hidden"
         >
-          <div id="tracklist">
-            <!-- Tracks rendered by JS -->
-          </div>
-        </div>
-
-        <div style="text-align: center; margin-top: 32px">
-          <a
-            href="https://youtube.com/playlist?list=PLWqMlTyfpV7D58oFebO7hz6o5TNlzcwYK&si=VIfSrsNFcjlbn5Wg"
-            target="_blank"
-            class="btn btn-primary btn-lg"
-          >
-            <i class="fab fa-youtube"></i> Play Full Album on YouTube
-          </a>
+          <div id="tracklist"></div>
         </div>
       </div>
     </section>
 
     <!-- Streaming Platforms -->
-    <section class="section" style="background: var(--white)">
+    <section class="section">
       <div class="container">
         <div class="section-header">
           <h2>Stream "Bophelo Ke Wena"</h2>
           <p>Available on all major platforms</p>
         </div>
-
         <div class="platform-grid" style="max-width: 700px; margin: 0 auto">
           <a
             href="https://youtube.com/playlist?list=PLWqMlTyfpV7D58oFebO7hz6o5TNlzcwYK&si=VIfSrsNFcjlbn5Wg"
@@ -274,7 +442,7 @@
             <strong>YouTube</strong>
           </a>
           <a
-            href="https://open.spotify.com/artist/741MLklI0dOpppxvXJwnit?si=sjuTlNLNSwWvltotc-IoHA"
+            href="https://open.spotify.com/artist/741MLklI0dOpppxvXJwnit"
             target="_blank"
             class="platform-card"
           >
@@ -292,7 +460,7 @@
             <strong>Apple Music</strong>
           </a>
           <a
-            href="https://music.amazon.com/artists/B0G4R6W1YH/c-o-g-royal-priesthood?marketplaceId=ATVPDKIKX0DER&musicTerritory=US&ref=dm_sh_jbU4lFb3bz8WvCW7BSP0lHWAE"
+            href="https://music.amazon.com/artists/B0G4R6W1YH/c-o-g-royal-priesthood"
             target="_blank"
             class="platform-card"
           >
@@ -302,19 +470,53 @@
             <strong>Amazon Music</strong>
           </a>
         </div>
-        <p
-          style="
-            text-align: center;
-            margin-top: 20px;
-            color: var(--text-light);
-            font-size: 0.9rem;
-          "
-        >
-          <i class="fas fa-info-circle"></i> Spotify, Apple Music & Amazon links
-          coming soon
-        </p>
       </div>
     </section>
+
+    <!-- Hidden YouTube Player -->
+    <div id="ytPlayerContainer"></div>
+
+    <!-- Player Bar (fixed at bottom) -->
+    <div class="player-bar" id="playerBar">
+      <button
+        class="player-close"
+        onclick="stopPlayback()"
+        title="Close player"
+      >
+        <i class="fas fa-times"></i>
+      </button>
+      <div class="player-thumb" onclick="playTrack(currentTrackIndex)">
+        <img id="playerThumb" src="" alt="" />
+      </div>
+      <div class="player-info">
+        <div class="player-title" id="playerTitle">—</div>
+        <div class="player-artist" id="playerArtist">C.O.G Brass Band</div>
+      </div>
+      <div class="player-controls">
+        <button class="player-btn" onclick="previousTrack()" title="Previous">
+          <i class="fas fa-step-backward"></i>
+        </button>
+        <button
+          class="player-btn player-play-btn"
+          id="playPauseBtn"
+          onclick="togglePlayPause()"
+        >
+          <i class="fas fa-pause"></i>
+        </button>
+        <button class="player-btn" onclick="nextTrack()" title="Next">
+          <i class="fas fa-step-forward"></i>
+        </button>
+        <a
+          href="#"
+          id="ytOpenLink"
+          target="_blank"
+          class="player-btn"
+          title="Open on YouTube"
+        >
+          <i class="fab fa-youtube"></i>
+        </a>
+      </div>
+    </div>
 
     <div id="footer-placeholder"></div>
 
@@ -324,44 +526,224 @@
     <script src="js/firebase-config.js"></script>
     <script src="js/main.js"></script>
 
+    <!-- YouTube IFrame API -->
+    <script src="https://www.youtube.com/iframe_api"></script>
+
     <script>
+      // ============================================
+      // ALBUM TRACKS — with individual YouTube IDs
+      // ============================================
       const albumTracks = [
-        { num: 1, title: "Hosanna" },
-        { num: 2, title: "Bophelo Ke Wena" },
-        { num: 3, title: "Influencer" },
-        { num: 4, title: "Ke Kgotso" },
-        { num: 5, title: "Moya Wa Kreste" },
-        { num: 6, title: "Oh Dark The Night" },
-        { num: 7, title: "Rorisang Matla" },
-        { num: 8, title: "Ejwale" },
-        { num: 9, title: "Ashwa Ke Lerato" },
-        { num: 10, title: "Ndikhokhele" },
-        { num: 11, title: "The Priest" },
-        { num: 12, title: "Pula Tsa Lehlohonolo" },
+        { num: 1, title: "Hosanna", videoId: "OnwuHshmdAg" },
+        { num: 2, title: "Bophelo Ke Wena", videoId: "gFOm-xcKFS4" },
+        { num: 3, title: "Influencer", videoId: "-LtC8prcL-4" },
+        { num: 4, title: "Ke Kgotso", videoId: "YfIe46ZfXmk" },
+        { num: 5, title: "Moya Wa Kreste", videoId: "n-20RWGXY3I" },
+        { num: 6, title: "Oh Dark The Night", videoId: "SIRy6p-EfH8" },
+        { num: 7, title: "Rorisang Matla", videoId: "pWq_-T1aYJk" },
+        { num: 8, title: "Ejwale", videoId: "faKyClD23ws" },
+        { num: 9, title: "Ashwa Ke Lerato", videoId: "Dp_1x-hffgU" },
+        { num: 10, title: "Ndikhokhele", videoId: "4TJyT9wAx3w" },
+        { num: 11, title: "The Priest", videoId: "LID7s17aXVA" },
+        { num: 12, title: "Pula Tsa Lehlohonolo", videoId: "tghFn9Cfvhs" },
       ];
 
-      const youtubePlaylist =
-        "https://youtube.com/playlist?list=PLWqMlTyfpV7D58oFebO7hz6o5TNlzcwYK&si=VIfSrsNFcjlbn5Wg";
-
-      document.getElementById("tracklist").innerHTML = albumTracks
-        .map(
-          (track) => `
-            <a href="${youtubePlaylist}" target="_blank" 
-               style="display: flex; align-items: center; gap: 16px; padding: 16px 24px; border-bottom: 1px solid var(--gray-200); color: var(--text); text-decoration: none; transition: background 0.2s;"
-               onmouseover="this.style.background='var(--gray-100)'"
-               onmouseout="this.style.background='transparent'">
-                <span style="width: 32px; height: 32px; background: var(--gray-100); border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: 700; color: var(--navy); font-size: 0.85rem; flex-shrink: 0;">
-                    ${track.num}
-                </span>
-                <span style="flex: 1; font-weight: 600;">${track.title}</span>
-                <i class="fas fa-play-circle" style="color: var(--gold); font-size: 1.25rem;"></i>
-            </a>
-        `,
-        )
-        .join("");
+      let ytPlayer = null;
+      let ytReady = false;
+      let currentTrackIndex = -1;
+      let isPlaying = false;
 
       // ============================================
-      // HERO SLIDESHOW
+      // RENDER TRACKLIST
+      // ============================================
+      function renderTracklist() {
+        document.getElementById("tracklist").innerHTML = albumTracks
+          .map(
+            (track, i) => `
+        <div class="track-row" data-index="${i}" onclick="playTrack(${i})" id="track-row-${i}">
+          <span class="track-num" id="track-num-${i}">${track.num}</span>
+          <span class="track-title">${track.title}</span>
+          <i class="fas fa-play-circle track-play-icon" id="track-icon-${i}"></i>
+        </div>
+      `,
+          )
+          .join("");
+      }
+
+      // ============================================
+      // YOUTUBE IFRAME API
+      // ============================================
+      function onYouTubeIframeAPIReady() {
+        ytPlayer = new YT.Player("ytPlayerContainer", {
+          height: "0",
+          width: "0",
+          videoId: "",
+          playerVars: {
+            autoplay: 0,
+            controls: 0,
+            disablekb: 1,
+            fs: 0,
+            modestbranding: 1,
+            origin: window.location.origin,
+          },
+          events: {
+            onReady: () => {
+              ytReady = true;
+              console.log("✓ YouTube player ready");
+            },
+            onStateChange: onPlayerStateChange,
+            onError: onPlayerError,
+          },
+        });
+      }
+
+      function onPlayerStateChange(event) {
+        // 0 = ended, 1 = playing, 2 = paused, 3 = buffering, 5 = cued
+        if (event.data === YT.PlayerState.ENDED) {
+          nextTrack();
+        } else if (event.data === YT.PlayerState.PLAYING) {
+          isPlaying = true;
+          updatePlayPauseBtn();
+        } else if (event.data === YT.PlayerState.PAUSED) {
+          isPlaying = false;
+          updatePlayPauseBtn();
+        }
+      }
+
+      function onPlayerError(event) {
+        console.error("YouTube player error:", event.data);
+        // Error codes: 2 = invalid param, 5 = HTML5 error, 100 = not found, 101/150 = embed disabled
+        if (event.data === 101 || event.data === 150) {
+          const track = albumTracks[currentTrackIndex];
+          alert(
+            `"${track.title}" can't be embedded.\n\nOpening on YouTube instead...`,
+          );
+          window.open(
+            `https://www.youtube.com/watch?v=${track.videoId}`,
+            "_blank",
+          );
+          // Auto-advance after a moment
+          setTimeout(nextTrack, 1000);
+        } else {
+          alert("Error loading this track. Please try another.");
+        }
+      }
+
+      // ============================================
+      // PLAYBACK CONTROLS
+      // ============================================
+      function playTrack(index) {
+        if (!ytReady) {
+          alert("Player is loading, please try again in a moment.");
+          return;
+        }
+        if (index < 0 || index >= albumTracks.length) return;
+
+        const track = albumTracks[index];
+        currentTrackIndex = index;
+
+        // If same track, just resume
+        if (ytPlayer.getVideoData().video_id === track.videoId) {
+          ytPlayer.playVideo();
+          return;
+        }
+
+        ytPlayer.loadVideoById(track.videoId);
+
+        // Update UI
+        updatePlayerBar(track);
+        highlightActiveTrack(index);
+        showPlayerBar();
+      }
+
+      function togglePlayPause() {
+        if (!ytReady || currentTrackIndex === -1) return;
+        if (isPlaying) {
+          ytPlayer.pauseVideo();
+        } else {
+          ytPlayer.playVideo();
+        }
+      }
+
+      function nextTrack() {
+        if (currentTrackIndex === -1) return;
+        const next = (currentTrackIndex + 1) % albumTracks.length;
+        playTrack(next);
+      }
+
+      function previousTrack() {
+        if (currentTrackIndex === -1) return;
+        const prev =
+          (currentTrackIndex - 1 + albumTracks.length) % albumTracks.length;
+        playTrack(prev);
+      }
+
+      function stopPlayback() {
+        if (ytPlayer && ytReady) {
+          ytPlayer.stopVideo();
+        }
+        hidePlayerBar();
+        isPlaying = false;
+        currentTrackIndex = -1;
+        clearActiveTrack();
+      }
+
+      // ============================================
+      // UI UPDATES
+      // ============================================
+      function updatePlayerBar(track) {
+        document.getElementById("playerTitle").textContent = track.title;
+        document.getElementById("playerArtist").textContent =
+          "C.O.G Brass Band · Bophelo Ke Wena";
+        document.getElementById("playerThumb").src =
+          `https://img.youtube.com/vi/${track.videoId}/hqdefault.jpg`;
+        document.getElementById("ytOpenLink").href =
+          `https://www.youtube.com/watch?v=${track.videoId}`;
+      }
+
+      function showPlayerBar() {
+        document.getElementById("playerBar").classList.add("active");
+      }
+
+      function hidePlayerBar() {
+        document.getElementById("playerBar").classList.remove("active");
+      }
+
+      function updatePlayPauseBtn() {
+        const btn = document.getElementById("playPauseBtn");
+        btn.innerHTML = isPlaying
+          ? '<i class="fas fa-pause"></i>'
+          : '<i class="fas fa-play"></i>';
+      }
+
+      function highlightActiveTrack(index) {
+        // Clear all
+        albumTracks.forEach((_, i) => {
+          document.getElementById(`track-row-${i}`).classList.remove("active");
+          document.getElementById(`track-icon-${i}`).className =
+            "fas fa-play-circle track-play-icon";
+        });
+        // Highlight current
+        document.getElementById(`track-row-${index}`).classList.add("active");
+        document.getElementById(`track-icon-${index}`).className =
+          "fas fa-pause-circle track-play-icon";
+      }
+
+      function clearActiveTrack() {
+        albumTracks.forEach((_, i) => {
+          document.getElementById(`track-row-${i}`).classList.remove("active");
+          document.getElementById(`track-icon-${i}`).className =
+            "fas fa-play-circle track-play-icon";
+        });
+      }
+
+      // ============================================
+      // INIT
+      // ============================================
+      renderTracklist();
+
+      // ============================================
+      // HERO SLIDESHOW (already in main.js but keep as fallback)
       // ============================================
       (function initHeroSlideshow() {
         const slides = document.querySelectorAll(".hero-slide");
@@ -371,7 +753,6 @@
         let current = 0;
         let interval;
 
-        // Create dots
         slides.forEach((_, i) => {
           const dot = document.createElement("button");
           dot.style.cssText = `width: 12px; height: 12px; border-radius: 50%; border: 2px solid white; background: ${i === 0 ? "white" : "transparent"}; cursor: pointer; padding: 0; transition: all 0.3s;`;
@@ -399,5 +780,14 @@
         interval = setInterval(nextSlide, 5000);
       })();
     </script>
+
+    <!-- Mobile layout fix -->
+    <style>
+      @media (max-width: 768px) {
+        .album-layout {
+          grid-template-columns: 1fr !important;
+        }
+      }
+    </style>
   </body>
 </html>
